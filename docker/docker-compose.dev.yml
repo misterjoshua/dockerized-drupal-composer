@@ -5,8 +5,11 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
+    environment:
+      - DEBUG_MODE=yes
     volumes:
       - site-data:/data
+      - ..:/app
     ports:
       - 48080:80
 
