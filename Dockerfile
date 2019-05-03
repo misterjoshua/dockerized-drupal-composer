@@ -14,16 +14,8 @@ COPY docker/httpd/xdebug.ini /usr/local/etc/php/conf.d/99-xdebug.ini
 RUN date +"%s" >/deployment-identifier
 
 # Provide the app build
-WORKDIR /app
-COPY config config
-COPY docker docker
-COPY drush drush
-COPY scripts scripts
-COPY vendor vendor
-COPY web web
-COPY load.environment.php load.environment.php
-COPY composer.json composer.json
-COPY composer.lock composer.lock
+COPY app /app
+COPY docker /docker
 
 # Runtime environment
 ENV DEBUG_MODE=''
@@ -45,8 +37,8 @@ ENV DRUPAL_FILES_PATH=/files
 
 VOLUME /data
 
-WORKDIR /app/
-ENTRYPOINT /app/docker/entrypoint.sh
+WORKDIR /app
+ENTRYPOINT /docker/entrypoint.sh
 
 EXPOSE 80
 CMD ["apache2-foreground"]

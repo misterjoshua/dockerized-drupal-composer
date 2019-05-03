@@ -9,7 +9,7 @@ DEBUG_MODE=${DEBUG_MODE:=}
 DRUPAL_FILES_ROOT=${DRUPAL_FILES_ROOT:=/data}
 DRUPAL_FILES_USER=${DRUPAL_FILES_USER:=www-data}
 DRUPAL_FILES_GROUP=${DRUPAL_FILES_GROUP:=www-data}
-DOCKER_DIR=${DOCKER_DIR:=/app/docker}
+DOCKER_DIR=${DOCKER_DIR:=/docker}
 
 # Disable xdebug if we're not in debug mode.
 if [[ -z "$DEBUG_MODE" ]]; then

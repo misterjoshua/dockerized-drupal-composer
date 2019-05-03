@@ -2,14 +2,12 @@ version: "3.3"
 
 services:
   drupal:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    build: .
     environment:
       - DEBUG_MODE=yes
     volumes:
       - site-data:/data
-      - ..:/app
+      - ./app:/app
     ports:
       - 48080:80
 
