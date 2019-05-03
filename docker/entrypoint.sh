@@ -9,6 +9,7 @@ DEBUG_MODE=${DEBUG_MODE:=}
 DRUPAL_FILES_ROOT=${DRUPAL_FILES_ROOT:=/data}
 DRUPAL_FILES_USER=${DRUPAL_FILES_USER:=www-data}
 DRUPAL_FILES_GROUP=${DRUPAL_FILES_GROUP:=www-data}
+DOCKER_DIR=${DOCKER_DIR:=/app/docker}
 
 # Disable xdebug if we're not in debug mode.
 if [[ -z "$DEBUG_MODE" ]]; then
@@ -21,9 +22,9 @@ mkdir -p ${DRUPAL_FILES_ROOT}/private
 mkdir -p ${DRUPAL_FILES_ROOT}/translations
 chown -R ${DRUPAL_FILES_USER}:${DRUPAL_FILES_GROUP} ${DRUPAL_FILES_ROOT}/*
 
-# Initialize drupal settings to use the default settings file.
-rm -rf ${SITE_DIR}/settings.php
-ln -sf ${SITE_DIR}/default.settings.php ${SITE_DIR}/settings.php
+# Initialize drupal settings to use the docker settings file. Users can add
+# their own settings in settings.local.php.
+ln -sf ${DOCKER_DIR}/drupal/settings.php ${SITE_DIR}/settings.php
 
 # Run apache
 docker-php-entrypoint apache2-foreground
