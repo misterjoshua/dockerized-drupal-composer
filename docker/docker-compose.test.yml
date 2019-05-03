@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+  drupal:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    volumes:
+      - site-data:/data
+    ports:
+      - 48080:80
+
+  mysql:
+    image: mysql:5
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=drupal
+      - MYSQL_USER=drupal
+      - MYSQL_PASSWORD=changeme
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  site-data:
+  mysql-data:

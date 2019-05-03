@@ -90,6 +90,18 @@
  */
 $databases = [];
 
+$databases['default']['default'] = array (
+  'database' => getenv('DRUPAL_DB_NAME'),
+  'username' => getenv('DRUPAL_DB_USERNAME'),
+  'password' => getenv('DRUPAL_DB_PASSWORD'),
+  'host' => getenv('DRUPAL_DB_HOST'),
+  'port' => getenv('DRUPAL_DB_PORT'),
+  'driver' => getenv('DRUPAL_DB_DRIVER'),
+  'prefix' => getenv('DRUPAL_DB_PREFIX'),
+  'collation' => 'utf8mb4_general_ci',
+);
+
+
 /**
  * Customizing database settings.
  *
@@ -251,7 +263,9 @@ $databases = [];
  *   );
  * @endcode
  */
-$config_directories = [];
+$config_directories = [
+  'sync' => '../config/sync',
+];
 
 /**
  * Settings:
@@ -280,7 +294,7 @@ $config_directories = [];
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = '';
+$settings['hash_salt'] = getenv('DRUPAL_HASH_SALT');
 
 /**
  * Deployment identifier.
@@ -519,7 +533,7 @@ if ($settings['hash_salt']) {
  * must exist and be writable by Drupal. This directory must be relative to
  * the Drupal installation directory and be accessible over the web.
  */
-# $settings['file_public_path'] = 'sites/default/files';
+# $settings['file_public_path'] = '/data/public';
 
 /**
  * Private file path:
@@ -534,7 +548,7 @@ if ($settings['hash_salt']) {
  * See https://www.drupal.org/documentation/modules/file for more information
  * about securing private files.
  */
-# $settings['file_private_path'] = '';
+$settings['file_private_path'] = '/data/private';
 
 /**
  * Session write interval:
@@ -728,6 +742,9 @@ $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
  * will allow the site to run off of all variants of example.com and
  * example.org, with all subdomains included.
  */
+$settings['trusted_host_patterns'] = [
+  getenv('DRUPAL_TRUSTED_HOST_PATTERN'),
+];
 
 /**
  * The default list of directories that will be ignored by Drupal's file API.
