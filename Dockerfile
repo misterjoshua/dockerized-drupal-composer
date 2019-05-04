@@ -3,12 +3,11 @@ FROM drupal:8
 # Remove the old drupal
 RUN rm -rf /var/www/html
 
-# Add xdebug (disabled by entrypoint.sh if DEBUG_MODE env is empty)
+# Add xdebug (only used with a supported $DEBUG_MODE env)
 RUN pecl install xdebug-2.7.1 && docker-php-ext-enable xdebug
 
 # Configure httpd
 COPY docker/httpd/app.conf /etc/apache2/sites-available/000-default.conf
-COPY docker/httpd/xdebug.ini /usr/local/etc/php/conf.d/99-xdebug.ini
 
 # Provide a build date so drupal can use it as a deployment_identifier
 RUN date +"%s" >/deployment-identifier

@@ -10,9 +10,16 @@ DRUPAL_FILES_ROOT=${DRUPAL_FILES_ROOT:=/data}
 DRUPAL_FILES_USER=${DRUPAL_FILES_USER:=www-data}
 DRUPAL_FILES_GROUP=${DRUPAL_FILES_GROUP:=www-data}
 DOCKER_DIR=${DOCKER_DIR:=/docker}
+DOCKER_LOCALHOST=host.docker.internal
 
 # Disable xdebug if we're not in debug mode.
-if [[ -z "$DEBUG_MODE" ]]; then
+if [[ "$DEBUG_MODE" = "connect_back" ]]; then
+    echo "Debugging with connect-back"
+    cp ${DOCKER_DIR}/httpd/xdebug_connect_back.ini ${PHP_CONF_DIR}/xdebug.ini
+elif [[ "$DEBUG_MODE" = "docker_host" ]]; then
+    echo "Debugging to docker localhost"
+    cp ${DOCKER_DIR}/httpd/xdebug_docker_localhost.ini ${PHP_CONF_DIR}/xdebug.ini
+else
     rm -rf ${PHP_CONF_DIR}/*xdebug*.ini
 fi
 

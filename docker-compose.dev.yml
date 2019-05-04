@@ -4,7 +4,9 @@ services:
   drupal:
     build: .
     environment:
-      - DEBUG_MODE=yes
+#      - DEBUG_MODE=no
+#      - DEBUG_MODE=connect_back
+      - DEBUG_MODE=docker_host
     volumes:
       - site-data:/data
       - ./app:/app
